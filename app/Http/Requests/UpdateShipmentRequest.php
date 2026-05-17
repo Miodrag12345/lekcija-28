@@ -2,10 +2,11 @@
 
 namespace App\Http\Requests;
 
-use Illuminate\Contracts\Validation\ValidationRule;
+use App\Rules\UserClient;
+use App\Rules\UserTrcuker;
 use Illuminate\Foundation\Http\FormRequest;
 
-class NewShipmentRequest extends FormRequest
+class UpdateShipmentRequest extends FormRequest
 {
 
     public function authorize(): bool
@@ -13,11 +14,7 @@ class NewShipmentRequest extends FormRequest
         return true;
     }
 
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array<string, ValidationRule|array<mixed>|string>
-     */
+
     public function rules(): array
     {
         return [
@@ -33,14 +30,18 @@ class NewShipmentRequest extends FormRequest
 
             'status' => 'required|in:in_progress,unassigned,completed,problem ',
 
-            'user_id' => 'required|exists:users,id',
+
 
             'details' => 'nullable|string|max:1000',
-            'documents' =>'required|array',
-            'document. *'=>'file|mimes:jpg,jpeg,png,webp,pdf,doc,docx|max:10240',
-             'client_id' => [
-                 'required', new UserClient()
-             ]
+            'user_id'=>
+            [
+                'required',
+                new UserTrcuker()
+            ],
+            'client_id'=>['required',
+                 new UserClient()
+                ]
+
         ];
     }
 }

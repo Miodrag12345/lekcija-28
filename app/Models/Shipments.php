@@ -26,7 +26,9 @@ class Shipments extends Model
              'price',
               'status',
               'user_id',
-              'details'
+              'details',
+              'client_id',
+
 
 
         ];

@@ -85,27 +85,37 @@
 
             <div class="form-group">
                 <label>From City</label>
-                <input type="text" name="from_city" value="{{ old('from_city') }}">
+                <input type="text" name="from_city" value="{{ old('from_city') }}" required>
             </div>
 
             <div class="form-group">
                 <label>From Country</label>
-                <input type="text" name="from_country" value="{{ old('from_country') }}">
+                <input type="text" name="from_country" value="{{ old('from_country') }}" required>
             </div>
 
             <div class="form-group">
                 <label>To City</label>
-                <input type="text" name="to_city" value="{{ old('to_city') }}">
+                <input type="text" name="to_city" value="{{ old('to_city') }}"  required>
             </div>
 
             <div class="form-group">
                 <label>To Country</label>
-                <input type="text" name="to_country" value="{{ old('to_country') }}">
+                <input type="text" name="to_country" value="{{ old('to_country') }}" required>
             </div>
 
             <div class="form-group">
                 <label>Price</label>
-                <input type="number" step="0.01" name="price" value="{{ old('price') }}">
+                <input type="number"  name="price" value="{{ old('price') }}" required>
+            </div>
+
+            <div class="form-group">
+
+                @if($errors->has('client_id'))
+                    <p>{{$errors->first}}</p>
+                @endif
+
+                <label for="user_id">Client ID</label>
+                <input type="number" name="client_id" value="{{ old('client_id')}}" min="0" required>
             </div>
 
             <div class="form-group">

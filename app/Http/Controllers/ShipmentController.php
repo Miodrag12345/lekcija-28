@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Support\Facades\Cache;
 use App\Http\Requests\NewShipmentRequest;
+use App\Http\Requests\UpdateShipmentRequest;
 use App\Models\Shipments;
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 
 class ShipmentController extends Controller
 {
@@ -62,9 +61,10 @@ class ShipmentController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Shipments $shipments)
+    public function update(UpdateShipmentRequest $request, Shipments $shipment)
     {
-        //
+       $shipment->update($request->validated());
+       return redirect()->back();
     }
 
     /**

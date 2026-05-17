@@ -78,8 +78,9 @@
         <div class="form-container">
             <h2 class="form-title">Create New Shipment</h2>
 
-            <form action="{{ route('shipments.store') }}" method="POST">
+            <form action="{{ route('shipments.update'), ['shipment' =>$shipment->id]}}" enctype="multipart/form-data" method="POST">
                 @csrf
+                @method('PUT')
 
                 <div class="form-group">
                     <label>Title</label>
@@ -88,28 +89,51 @@
                 </div>
 
                 <div class="form-group">
-                    <label>From City</label>
-                    <input type="text" name="from_city" value="{{$shipment->from_city ?? ''}}">
+                    <label for="from_city">From City</label>
+                    <input type="text" name="from_city" value="{{$shipment->from_city ?? ''}}" required>
                 </div>
 
                 <div class="form-group">
-                    <label>From Country</label>
-                    <input type="text" name="from_country" value="{{ $shipment->from_country  ?? ''}}">
+                    <label for="from_country">From Country</label>
+                    <input type="text" name="from_country" value="{{ $shipment->from_country  ?? ''}}" required>
                 </div>
 
                 <div class="form-group">
-                    <label>To City</label>
-                    <input type="text" name="to_city" value="{{ $shipment->to_city ?? ''}}">
+                    <label for="to_city"l>To City</label>
+                    <input type="text" name="to_city" value="{{ $shipment->to_city ?? ''}}" required>
                 </div>
 
                 <div class="form-group">
-                    <label>To Country</label>
-                    <input type="text" name="to_country" value="{{ $shipment->to_country ?? '' }}">
+                    <label for="to_country">To Country</label>
+                    <input type="text" name="to_country" value="{{ $shipment->to_country ?? '' }}" required>
                 </div>
 
                 <div class="form-group">
-                    <label>Price</label>
-                    <input type="number" step="0.01" name="price" value="{{ $shipment->price ?? ''}}">
+                    <label for="price">Price ($)</label>
+                    <input type="number"  name="user_id" value="{{ $shipment->price ?? ''}}" min="0" required>
+                </div>
+
+
+
+                <div class="form-group">
+
+                    @if($errors->has('user_id'))
+                        <p>{{$errors->first('user_id')}}</p>
+                    @endif
+
+                    <label for="user_id">Trucker ID</label>
+                    <input type="number" name="user_id" value="{{ $shipment->user_id ?? ''}}" min="0" required>
+                </div>
+
+
+                <div class="form-group">
+
+                    @if($errors->has('client_id'))
+                        <p>{{$errors->first('client_id')}}</p>
+                    @endif
+
+                    <label for="user_id">Client ID</label>
+                    <input type="number" name="client_id" value="{{ $shipment->client_id ?? ''}}" min="0" required>
                 </div>
 
                 <div class="form-group">
@@ -142,7 +166,7 @@
                     <textarea name="details">{{ old('details') }}</textarea>
                 </div>
 
-                <button type="submit" class="btn">Create Shipment</button>
+                <button type="submit" class="btn">Update Shipment</button>
             </form>
         </div>
 
