@@ -9,6 +9,7 @@ use App\Http\Requests\NewShipmentRequest;
 use App\Models\Shipments;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 class ShipmentController extends Controller
 {
@@ -17,7 +18,12 @@ class ShipmentController extends Controller
 
 
     public function index()
+
+
     {
+
+
+
         Cache::forget('unassigned_shipments');
         $shipments = Cache::remember('unassigned_shipments', 600,
             fn() => Shipments::where(['status' => Shipments::STATUS_UNASSIGNED])->get());
@@ -32,6 +38,8 @@ class ShipmentController extends Controller
      */
     public function create()
     {
+        Gate::authorize('canViewCreationPage', Shipment::class);
+
         return view('shipments.create');
     }
 
@@ -40,6 +48,9 @@ class ShipmentController extends Controller
      */
     public function store(NewShipmentRequest $request)
     {
+
+        Gate::authorize('create', Shipment::class);
+
         $data = $request->validated();
 
         $shipment=Shipments::create($request->validated());
