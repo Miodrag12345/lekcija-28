@@ -116,7 +116,8 @@ class ShipmentController extends Controller
      */
     public function edit(Shipments $shipments)
     {
-        //
+        Gate::authorize('view', $shipments);
+        return view('shipments.edit',compact('shipments'));
     }
 
     /**
