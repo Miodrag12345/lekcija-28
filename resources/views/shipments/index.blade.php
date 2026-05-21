@@ -62,6 +62,7 @@
     </style>
 
     <div class="container">
+        @foreach($shipments as $shipment)
         <h1 class="title">Shipments List</h1>
 
         @forelse($shipments as $shipment)
@@ -94,5 +95,19 @@
             <div class="empty">No shipments available.</div>
         @endforelse
     </div>
+
+    <form method="POST" action="{{route('shipments.assignUser'),['shipment'=>$shipment->id]}}">
+
+
+
+        <select name="user_id">
+            <option selected disabled >None</option>
+             @foreach(\App\Models\User::all() as $user)
+             <option value="{{ $user->id}}">{{$user->name}}</option>
+             @endforeach
+        </select>
+        <button>Assigned</button>
+    </form>
+    @endforeach
 
 @endsection

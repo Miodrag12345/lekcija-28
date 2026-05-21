@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use function SebastianBergmann\CodeCoverage\TestFixture\f;
 
 class Shipments extends Model
 {
@@ -12,7 +13,7 @@ class Shipments extends Model
     const STATUS_UNASSIGNED="unassigned";
     const STATUS_COMPLETED="completed";
     const STATUS_PROBLEM="problem";
-    const STATUS_IN_PROGRESS="in_progress";
+    const STATUS_IN_PROGRESS="started";
 
     const ALLOWED_STATUS=[
         self::STATUS_UNASSIGNED,self::STATUS_COMPLETED,self::STATUS_PROBLEM,self::STATUS_IN_PROGRESS
@@ -32,11 +33,25 @@ class Shipments extends Model
 
 
         ];
+
+    protected $table='shipments';
+
+
+
+
     public function  setStatusAttribute($status)
     {
         if(!in_array($status,self::ALLOWED_STATUS)) {
             throw new \Exception("Invalid status");
         }
         $this->attributes['status']=$status;
+    }
+
+    public function documents()
+    {
+       return $this->hasMany(ShipmentDocuments::class , 'shipment_id','id');
+    }
+    public function scopeUnassignedShipments ($query){
+        return $query->where('status',self::STATUS_UNASSIGNED);
     }
 }

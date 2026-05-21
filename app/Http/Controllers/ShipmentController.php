@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Requests\NewShipmentRequest;
 use App\Http\Requests\UpdateShipmentRequest;
 use App\Models\Shipments;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 
 class ShipmentController extends Controller
@@ -16,7 +18,7 @@ class ShipmentController extends Controller
     {
         Cache::forget('unassigned_shipments');
         $shipments=Cache::remember('unassigned_shipments',600,
-            fn()=>Shipments::where(['status'=>Shipments::STATUS_UNASSIGNED])->get());
+            fn()=>Shipments::unassignedShipments()->get());
 
 
 
@@ -61,5 +63,20 @@ class ShipmentController extends Controller
     public function destroy(Shipments $shipments)
     {
         //
+    }
+
+    public function assignUser (Request $request, Shipment $shipment ):RedirectResponse
+    {
+
+
+        $request->validate(['user_id'=>'required|exists:users,id']);
+
+        $shipment->user_id =$request->user_id;
+        $shipment->status=Shipment ::STATUS_IN_PROGRESS;
+        $shipment->save();
+
+        Cache::forget('unassigned_shipments');
+
+         return  redirect()->back();
     }
 }
