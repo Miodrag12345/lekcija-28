@@ -110,4 +110,5 @@
     </form>
     @endforeach
 
+    <livewire:shipment-assigned-list>
 @endsection

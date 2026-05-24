@@ -16,6 +16,6 @@ class AppServiceProvider extends ServiceProvider
 
     public function boot(): void
     {
-        Shipment::observe(ShipmentObserver::class);
+        Shipments::observe(ShipmentObserver::class);
     }
 }

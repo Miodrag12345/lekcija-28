@@ -1,3 +1,5 @@
+
+
 <?php
 
 use App\Http\Controllers\ShipmentController;
@@ -13,7 +15,7 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-Router::resource('shipments', ShipmentController::class)->parameters(['shipments'=>'shipment']);
+Route::resource('shipments', ShipmentController::class)->parameters(['shipments'=>'shipment']);
 
 Route::post('/shipments{shipment}/assignUser', [ShipmentController::class, 'assignUser'])
     ->name('shipments.assignUser');
@@ -32,6 +34,4 @@ Route::post('/products/create', [ProductsController::class, 'create']);
 Route::get('/products/flush', [ProductsController::class, 'flush']);
 
 require __DIR__.'/auth.php';
-
-
 
