@@ -33,4 +33,14 @@ class ShipmentAssignedList extends Component
           $this->errorMessage ="Invalid math operation,it will go under 0 ";
       }
     }
+
+    public function validateAmount (){
+
+        if($this->amount<1) {
+            $this->errorMessage="Amount ne moze biti manje od 1";
+        } else {
+            $this->errorMessage="";
+        }
+
+    }
 }

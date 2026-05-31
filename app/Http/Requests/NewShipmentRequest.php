@@ -23,11 +23,11 @@ class NewShipmentRequest extends FormRequest
         return [
             'title' => 'required|string|max:255',
 
-            'from_city' => 'required|string|max:100',
-            'from_country' => 'required|string|max:100',
+            'fromCity' => 'required|string|max:100',
+            'fromCountry' => 'required|string|max:100',
 
-            'to_city' => 'required|string|max:100',
-            'to_country' => 'required|string|max:100',
+            'toCity' => 'required|string|max:100',
+            'toCountry' => 'required|string|max:100',
 
             'price' => 'required|numeric|min:0',
 
@@ -37,8 +37,9 @@ class NewShipmentRequest extends FormRequest
 
             'details' => 'nullable|string|max:1000',
             'documents' =>'required|array',
-            'document. *'=>'file|mimes:jpg,jpeg,png,webp,pdf,doc,docx|max:10240',
-             'client_id' => [
+            'documents. *'=>'file|mimes:jpg,jpeg,png,webp,pdf,doc,docx|max:10240',
+             'clientId'
+              => [
                  'required', new UserClient()
              ]
         ];
